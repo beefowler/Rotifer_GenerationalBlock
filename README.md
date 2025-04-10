@@ -21,6 +21,12 @@ gen_rotifer_twostrain.m
     This is similar to the function above, but modified to allow for two competing strains of rotifers. Input phenotype parameters, m_i, T_i, and G_i can now be size 2 to have different phenotypes competing. State variable, x, now includes that which would be used above for the first strain followed by the second. Both strains contribute to the total population size to control density dependent birth rate and mixis ratios.
     This function is called by many subsequent scripts 
 
+Figure4_WithinSeason.m 
+    This script simulates the within-season dynamics of a monomorphic population by calling gen_rotifer_onestrain within dde23 delay differential equation solver. The top of the script defines the parameter values, then simulates and plots for two scenarios with different mixis values. 
 
 
+
+
+Data_for_Figur5.mat
+    This script has results of stochastic simulations included in Figure 5. 
 
