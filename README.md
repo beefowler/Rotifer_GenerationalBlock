@@ -1,10 +1,7 @@
 # Rotifer_GenerationalBlock
 Code associated with manuscript, "Timing the Initiation of Sex" 
 
-
-
-Authors: Bethany L.F. Stevens, Silke van Daalen, Tirzah J. Blomquist, Kristin E. Gribble, Michael G. Neubert
-contact bstevens@ucsb.edu for questions. 
+Authors: [ Redacted for Review ]
 
 Summary: We develop a model of cyclically parthenogenic rotifer populations with a novel formulation of a ``mictic block'' that prevents sexual reproduction by females that are not sufficiently distant, genealogically, from a stem ancestor that was produced sexually. We consider the success of strains with different mixis phenotypes in different environments, including consecutive seasons of stochastic length as in Serra et al. 2005. We also consider invasion success of different strategies and explore the potential for a stable polymorphism. 
 
@@ -24,9 +21,25 @@ gen_rotifer_twostrain.m
 Figure4_WithinSeason.m 
     This script simulates the within-season dynamics of a monomorphic population by calling gen_rotifer_onestrain within dde23 delay differential equation solver. The top of the script defines the parameter values, then simulates and plots for two scenarios with different mixis values. 
 
+Figure5_part1.m 
+    This script simulates 40 independent experiments of 40 consecutive seasons of stachastic season length for an assortment of mixis phenotypes as plotted in Figure 5 of the manuscript. It does this by simulating the model with dde23 and adding the number of eggs produced in each season to create a record of cumulative_egg_production for each phenotye and each experimemt. 
 
-
-
-Data_for_Figur5.mat
+Data_for_Figure5.mat
     This script has results of stochastic simulations included in Figure 5. 
+    mixis = values of m_i used in experiment (x axis)
+    G_vals = values of G_i used in experiments
+    threshold = values of T_i used in experiment 
+    mixis_and_G = all combined pairs of phenotypes for the first set of experiments where T_i  = 0
+    mixis_and_thresh = all combined pairs of phenotype values for the second set of experiments where G_i - 0 
+    num_seasons = number of consecutive seasons per experiment
+    num_experiments = number of independent experiments per phenotype
+    cumulative_egg_production = cumulative eggs produced in each experiment with T_i = 0 for each phenotype organized according to "mixis_and_G" 
+    cumulative_egg_production_2 = cumulative eggs produced in each experiment with G_i = 0 for each phenotype organized according to "mixis_and_thresh" 
+    
+Figure5_part2.m 
+    This script takes the outputs of Figure5_part1.m (Data_for_Figure5.mat) and generates the desired figure. 
+    
+Figure6_fixedseasonsm 
+    This script explores how monomorphic populations of different phenotypes behave in short, medium, and long seasons of fixeed length. 
+    
 
