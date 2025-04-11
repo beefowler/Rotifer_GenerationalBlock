@@ -22,7 +22,7 @@ Figure4_WithinSeason.m
     This script simulates the within-season dynamics of a monomorphic population by calling gen_rotifer_onestrain within dde23 delay differential equation solver. The top of the script defines the parameter values, then simulates and plots for two scenarios with different mixis values. 
 
 Figure5_part1.m   
-    This script simulates 40 independent experiments of 40 consecutive seasons of stachastic season length for an assortment of mixis phenotypes as plotted in Figure 5 of the manuscript. It does this by simulating the model with dde23 and adding the number of eggs produced in each season to create a record of cumulative_egg_production for each phenotye and each experimemt. 
+    This script simulates 40 independent experiments of 40 consecutive seasons of stachastic season length for an assortment of mixis phenotypes as plotted in Figure 5 of the manuscript. It does this by simulating the model with dde23 and adding the number of eggs produced in each season to create a record of cumulative_egg_production for each phenotye and each experiment. These results are saved to Data_for_Figure5.mat.  
 
 Data_for_Figure5.mat  
     This script has results of stochastic simulations included in Figure 5.  
@@ -40,7 +40,24 @@ Figure5_part2.m
     This script takes the outputs of Figure5_part1.m (Data_for_Figure5.mat) and generates the desired figure. 
     
 Figure6_fixedseasons.m   
-    This script explores how monomorphic populations of different phenotypes behave in short, medium, and long seasons of fixed length. Again we use dde23 applied to gen_rotifer_onestrain to run these simulations. Lines 1-186 carry this out for G_i = 0 for each of three season lengths (Could have used a for loop, but we didn't), then the same steps are carried out for G_i = 8 to create the second column of the figure.   
+    This script explores how monomorphic populations of different phenotypes behave in short, medium, and long seasons of fixed length. Again we use dde23 applied to gen_rotifer_onestrain to run these simulations. Lines 1-186 carry this out for G_i = 0 for each of three season lengths, then the same steps are carried out for G_i = 8 to create the second column of the figure.   
+
+Invasion_Baseline_part1
+    This script conducts the invasion experiments needed to create the baseline pairwise invasibility plots for variable m when G_i = 0 and T_i = 0.   
+    For each pair of phenotypes, the script simulates 20 independent experiments with 40 consecutive seasons each using gen_rotifer_twostrains and dde23. The invader is introduced at the start of each experiement at frequency 0.05. Seasons have randomly chosen length between 10 and 51 days. If either population goes extinct before end of experiment, experiment is ended. Final invader proprotino is saved to invasion_prop variable within a matlab file named for the combination of phenotypes in that experiment. 
+    
+Invasion_Baseline_part1.m
+    This script conducts the invasion experiments needed to create the baseline pairwise invasibility plots for variable m when G_i = 0 and T_i = 0.   
+    For each pair of phenotypes, the script simulates 20 independent experiments with 40 consecutive seasons each using gen_rotifer_twostrains and dde23. The invader is introduced at the start of each experiement at frequency 0.05. Seasons have randomly chosen length between 10 and 51 days. If either population goes extinct before end of experiment, experiment is ended. Final invader proprotino is saved to invasion_prop variable within a matlab file named for the combination of phenotypes in that experiment. 
+
+PairwiseInvasion_M_Gis3.m 
+    Almost identical to Invasion_Baseline_part1.m, this script conducts the same set of experiments for G_i = 3 and saves results to PairwiseInvasion_M_Gis3. Mostly only made it a new script so we could run simultaneously on the same computer. 
+    
+InvasionofDelayTypes.m 
+    Following the same structure as Invasion_Baseline_part1.m, this script conducts invasion experiemnts for strains with mi = 0.11 and threshold =0. Strains with generational blocks (G_i = 0:8) are introduced a resident without a generational block and outputs are saved to Invasion_NoDelay_byG. 
+
+PairwiseInvasion_G.m 
+    Following the same structure as InvasionofDelayTypes.m, this script conducts pariwise invasion experiments for strains with variable G values. In this case all phenotypes can be either resident or invader in the experiments. Results are saved to PairwiseInvasion_G directory. We ran this script both for mixis = 0.17 and mixis = 0.11 and results are labelled accordingly. 
 
 Plot_PairwiseInvasionMatrices.m   
     Plots the results of the invasion experiments. Pulls from folders with outputs for individual invasion experiments, looks for the mean invasion proportion at the end of the experiments, and plots success if greater than or equal to 0.05 and failure if less than 0.05. One section of the code for eachof the Pairwise Invasion Plots in Figure S5, two of which make up Figure 7 in the main text.   
