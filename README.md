@@ -5,7 +5,7 @@ Authors: [ Redacted for Review ]
 
 Summary: We develop a model of cyclically parthenogenic rotifer populations with a novel formulation of a ``mictic block'' that prevents sexual reproduction by females that are not sufficiently distant, genealogically, from a stem ancestor that was produced sexually. We consider the success of strains with different mixis phenotypes in different environments, including consecutive seasons of stochastic length as in Serra et al. 2005. We also consider invasion success of different strategies and explore the potential for a stable polymorphism. 
 
-All scripts in this repository were written by BLFS, SVD, and MGN in MatLAB. 
+All scripts in this repository were written in MatLAB. 
 
 delay_example.m 
     This script generates Figure 2 in the manuscript, demonstrating the difference in egg production between strains with temporal and generational mictic blocks. The first two panels arise from single season simulations of two scenarios described in the text, for which we plot egg production over time. The third panel allows for consecutive seasons and plots the ratio of the number of eggs in each scenario for each consecutive season. 
@@ -39,7 +39,18 @@ Data_for_Figure5.mat
 Figure5_part2.m 
     This script takes the outputs of Figure5_part1.m (Data_for_Figure5.mat) and generates the desired figure. 
     
-Figure6_fixedseasonsm 
-    This script explores how monomorphic populations of different phenotypes behave in short, medium, and long seasons of fixeed length. 
+Figure6_fixedseasons.m 
+    This script explores how monomorphic populations of different phenotypes behave in short, medium, and long seasons of fixed length. Again we use dde23 applied to gen_rotifer_onestrain to run these simulations. Lines 1-186 carry this out for G_i = 0 for each of three season lengths (Could have used a for loop, but we didn't), then the same steps are carried out for G_i = 8 to create the second column of the figure. 
+
+Plot_PairwiseInvasionMatrices.m 
+    Plots the results of the invasion experiments. Pulls from folders with outputs for individual invasion experiments, looks for the mean invasion proportion at the end of the experiments, and plots success if greater than or equal to 0.05 and failure if less than 0.05. One section of the code for eachof the Pairwise Invasion Plots in Figure S5, two of which make up Figure 7 in the main text. 
+
+Figure8_NoBlockResident.m 
+    This script generates figure 8 from the results of the No Block Resident Invasion Experiments. 
+
+Figure9_TwoStrainTrajectories.m 
+    This script simulates two strains simultaneously for a single season. We use it to explore the dynamics of two strains that can mutualy invade eachother in our invasion experiments and to see their relative success over the course of a single season. We simulate this scenario using dde23 and gen_rotifer_twostrains.m This script produces Figure 9. 
+
     
 
+    
