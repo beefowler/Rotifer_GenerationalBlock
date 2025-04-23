@@ -1,5 +1,5 @@
-% This script produces a boxchard figure for invasion results of No Delay
-% Resident by invader pehnotypes with Generational Block 
+% This script produces a boxchart figure for invasion results of No Delay
+% Resident by invader phenotypes with Generational Block 
 
 outputlist = dir('Invasion_NoDelay_byG/*.mat'); 
 

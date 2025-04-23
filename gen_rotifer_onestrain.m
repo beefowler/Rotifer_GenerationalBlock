@@ -1,9 +1,9 @@
-%modifying to allow G_i = 0 to be possible
-
-%this is copy of cp_fun_monomorphic to be modified for generation model
+%this is model of rotifer population with generational block and density
+%threshold 
 %simulates system of ODEs for given parameters
 
 %Inputs:   (** indicate variables that are dependent on phenotype)
+    % t, time in days since start of growing season
     % x, initial state space of system
         % x is size 2+2*(G_i) (Resting eggs + Myctic Adults, Juveniles, Amictic Adults)
         % times G_i or the number of generations we are keeping track of. 
@@ -11,7 +11,7 @@
         % In order R, M, J_1, A_1, J_2, A_2, etc. 
         %(output of ode will be size t_span .* width(x))
     % x_hist = history of state space, tau units ago until "now". 
-    % tau = time, in hours?, until maturation from juveniles. 
+    % tau = time in days until maturation from juveniles. 
     % bmax = birthrate in absense of density dependence
     % q = death rate of adults
     % K = carying capacity
@@ -20,9 +20,9 @@
     % G_i = number of generations until mixis, first generation that will produce eggs **
     % m_i = mixis ratio for offspring ** 
     % T_i = threshhold of onset of mixis **     
-    % tunit = we need to know how many units back in X-hist is tau time ago
-    % phi = size of hatching 
-    % sk = birthdays 
+    % phi = size of hatching (number of resting eggs from last year divided
+             % by number of birthdays)
+    % sk = birthdays (days that resting eggs will hatch)
 
 %Output: dxdt = derivatives of state variables at time t during growing season. 
 
@@ -38,13 +38,13 @@ function dxdt =gen_rotifer_onestrain(t, x, x_hist,tau,bmax,q,K,c,G_i,m_i,T_i, ph
         x_hist = x_hist'; 
     end
     
-
     %go see how many generation zero there are and add those to the state
     %variables
     J_0 = how_many_J(t, phi, sk, tau, q);
     A_0 = how_many_A(t, phi, sk, tau, q); 
 
     X_all = [x(1:2); J_0; A_0; x(3:end)]; 
+    %history of state variable tau time ago: 
     X_hist_all = [x_hist(1:2); how_many_J(t-tau, phi, sk, tau, q); how_many_A(t-tau, phi, sk, tau, q); x_hist(3:end)];
 
     %resting eggs for next year
@@ -110,16 +110,14 @@ function dxdt =gen_rotifer_onestrain(t, x, x_hist,tau,bmax,q,K,c,G_i,m_i,T_i, ph
         % "furthest from stem" generations or highest j bin adults. 
             dxdt(A_ind(end)) = dxdt(A_ind(end)) + b_hist*X_hist_all(A_ind(end)).*(1-m_ij_hist(end))*exp(-q*tau); 
    
-        %I'm not completely sure this works mathematically: 
         %change in adults old enough to produce mictic offspring is equal to
         %production of amyctic adults by A(G_i -1) + production of amyctic adults
         % by A(>=G_i) - death. 
    
-       %generally the code doesn't work if G_i = 0
-        dxdt(3:4) = []; %we aren't calculating these anymore. 
+        dxdt(3:4) = []; %we aren't calculating these anymore. See functions below.  
         
 end
-%%
+%%  Stem juveniles nad adults do not depend on dynamics of the rest of the population 
 
 
 function J_0 = how_many_J(t, phi, sk, tau, q)

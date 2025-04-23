@@ -1,13 +1,12 @@
-%Modifying gen_rotifer4 to allow for possibility of Gi = 0, no generational
-%delay
-
-
-%this was a copy of gen_rotifer3 to be modified such that we can have two
+%this is model of rotifer population with generational block and density
+%threshold, script modified such that we can have two
 %phenotypes simulated simultaneously. 
 
+%simulates system of ODEs for given parameters
 %This function only works if there are two populations. 
 
 %Inputs:   (** indicate variables that are dependent on phenotype)
+    % t, time in days since start of growing season
     % x, initial state space of system. one phenotype then the other. 
         % x is size 2+2*(G_i(1)) + 2+2*(G_i(2)) (Resting eggs + Myctic Adults, Juveniles, Amictic Adults)
         % times G_i or the number of generations we are keeping track of. 
@@ -15,7 +14,7 @@
         % In order R, M, J_1, A_1, J_2, A_2, etc. then again R, M, J_1, etc
         %(output of ode will be size t_span .* width(x))
     % x_hist = history of state space, tau units ago until "now". 
-    % tau = time, in hours?, until maturation from juveniles. 
+    % tau = time in days until maturation from juveniles. 
     % bmax = birthrate in absense of density dependence
     % q = death rate of adults
     % K = carying capacity
@@ -25,7 +24,6 @@
     % produce eggs **   size 2
     % m_i = mixis ratio for offspring ** size 2
     % T_i = threshhold of onset of mixis **     size 2
-    % tunit = we need to know how many units back in X-hist is tau time ago
     % phi = size of hatching, size 2
     % sk = birthdays, %assumed to be the same for both phenotypes 
 
@@ -59,7 +57,6 @@ function dxdt = gen_rotifer_twostrains(t, x, x_hist,tau,bmax,q,K,c,G_i,m_i,T_i, 
 
     x_1 = x(1:x_width_1-2);   %assume state variable has first phenotype followed by second phenotype 
     x_2 = x(x_width_1-1:end); 
-    %clear x %just so we don't accidnetally use this when we mean the others
 
    
     %make sure inputs are the right orientation 
@@ -185,12 +182,11 @@ function dxdt = gen_rotifer_twostrains(t, x, x_hist,tau,bmax,q,K,c,G_i,m_i,T_i, 
             dxdt_1(A_ind_1(end)) = dxdt_1(A_ind_1(end)) + b_hist*X_hist_all_1(A_ind_1(end)).*(1-m_ij_hist_1(end))*exp(-q*tau); 
             dxdt_2(A_ind_2(end)) = dxdt_2(A_ind_2(end)) + b_hist*X_hist_all_2(A_ind_2(end)).*(1-m_ij_hist_2(end))*exp(-q*tau); 
 
-        %I'm not completely sure this works mathematically: 
         %change in adults old enough to produce mictic offspring is equal to
         %production of amyctic adults by A(G_i -1) + production of amyctic adults
         % by A(>=G_i) - death. 
    
-        dxdt_1(3:4) = []; %we aren't calculating these anymore. 
+        dxdt_1(3:4) = []; %we aren't calculating these anymore. %see functions below 
         dxdt_2(3:4) = []; %we aren't calculating these anymore. 
 
         dxdt = [dxdt_1; dxdt_2]; 

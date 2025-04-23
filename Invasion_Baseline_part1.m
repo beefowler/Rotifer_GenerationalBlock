@@ -6,7 +6,7 @@ clear all
 % Define the parameters 
 bmax=2.1; q=0.5; K=500; c=0.2; H=31; tau = 1; 
 % H is the final day of the season that hatching can happening 
-B_max = 1; %maximum number of resting eggs that survive to next season. In paper it is 1????
+B_max = 1; %maximum number of resting eggs that survive to next season. 
 %Hatching schedule 
 global phi half_x_width
 t0=0; %0 is season begins on first hatch day 

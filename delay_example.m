@@ -71,8 +71,6 @@ hold on
 plot(x_vals, tb_y, '--', 'color', map(4,:), 'linewidth', 3.5)
 plot(sol_gb.x, gb_y, 'color', gold, 'linewidth', 3.5) 
 
-%ylim([0 15])
-%xlim([0 10])
 xlabel('Time (d)')
 ylabel('Eggs (L^{-1})')
 
@@ -90,7 +88,7 @@ xlim([0 10])
 
 
 % now we want consecutive seasons for third panel 
-% Mikes code below
+%% Mikes code below
 r = 1;
 T_sp = 10;
 n = 40;
@@ -165,6 +163,7 @@ function h = gb_history(t)
         h = 0; 
     end
 end
+
 
 
 % Mike's version to get panel 3
