@@ -1,7 +1,7 @@
 clear all
 
-%How does our change to the mictic block affect the otpimal invadable
-%phenotypes for the same environmental paramters as Serra et al?
+%How does our change to the mictic block affect the optimal invadable
+%phenotypes for the same environmental parameters as Serra et al?
 
 % Define the parameters 
 bmax=2.1; q=0.5; K=500; c=0.2; H=31; tau = 1; 
